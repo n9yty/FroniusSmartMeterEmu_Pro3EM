@@ -1,0 +1,16 @@
+services:
+  3em:
+    #image: 3emfroniusmeter:0.1
+    image: pro3emfroniusmeter:0.1
+    ports:
+      - "502:502"
+    environment:
+      SHELLY_3EM: "192.168.99.124"
+      SHELLY_PRO3EM: "192.168.99.113"
+    restart: unless-stopped
+      #    sysctl:
+      #net.ipv4.ip_unprivileged_port_start: 0
+    cap_add:
+      - CAP_NET_BIND_SERVICE
+      - NET_BIND_SERVICE
+
