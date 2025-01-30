@@ -10,13 +10,21 @@
 # L2 = B
 # L3 = A
 
+# 0.2 changes from avyeegaztd on github
+# 0.1 initial
 
 from pprint import pprint
 from pymodbus.device import ModbusDeviceIdentification
 from pymodbus.datastore import ModbusSequentialDataBlock
 from pymodbus.datastore import ModbusSparseDataBlock
 from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
-from pymodbus.transaction import ModbusSocketFramer, ModbusAsciiFramer
+#<3.7 of pymodbus
+#from pymodbus.transaction import ModbusSocketFramer, ModbusAsciiFramer
+#=>3.7 of pymodbus
+#I was given this as an example, but it doesn't work/isn't needed
+#from pymodbus.transaction import FramerSocket, FramerAscii
+from pymodbus.framer import FramerType
+#
 from pymodbus.server import StartTcpServer
 from pymodbus.server import StartAsyncTcpServer
 import threading
@@ -30,6 +38,12 @@ import signal
 import os
 import urllib.request
 import asyncio
+
+#import logging
+#FORMAT = ('%(asctime)-15s %(threadName)-15s %(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
+#logging.basicConfig(format=FORMAT)
+#log = logging.getLogger()
+#log.setLevel(logging.DEBUG)
 
 ###############################################################
 # Timer Class
@@ -236,7 +250,9 @@ def start_meter(emeter, address):
     StartTcpServer(
         context=context,
         address=address,
-        framer=ModbusSocketFramer,
+        # <3.7
+        #framer=ModbusSocketFramer,
+        framer=FramerType.SOCKET,
     )
 
 def setup_meter ():
@@ -245,7 +261,9 @@ def setup_meter ():
     global servers
 
     datablock = ModbusSparseDataBlock({
-
+           12:  [0],
+          769:  [0],
+         1707:  [0],
         40001:  [21365, 28243],
         40003:  [1],
         40004:  [65],
@@ -253,7 +271,7 @@ def setup_meter ():
                 83,109,97,114,116,32,77,101,116,101,114,32,54,51,65,0, #Device Model "Smart Meter
                 0,0,0,0,0,0,0,0,                                       #Options N/A
                 0,0,0,0,0,0,0,0,                                       #Software Version  N/A
-                48,48,48,48,48,48,52,50,0,0,0,0,0,0,0,0,               #Serial Number: 00000042
+                48,48,48,48,48,48,48,49,0,0,0,0,0,0,0,0,               #Serial Number: 00000001
                 240],                                                  #Modbus TCP Address:
         40070: [213],
         40071: [124],

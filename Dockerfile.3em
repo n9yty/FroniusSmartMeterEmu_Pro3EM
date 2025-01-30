@@ -11,7 +11,7 @@ EXPOSE 502
 WORKDIR /home/3EMFroniusEmu
 
 #to COPY the remote file at working directory in container
-COPY Pro3EMFroniusMeter.py ./
+COPY 3EMFroniusMeter.py ./
 
 # Now the structure looks like this '/usr/app/src/test.py'
 
@@ -20,4 +20,4 @@ RUN pip3 install pymodbus>=3.7
 #CMD instruction should be used to run the software
 #contained by your image, along with any arguments.
 
-CMD [ "python3", "./Pro3EMFroniusMeter.py"]
+CMD [ "python3", "./3EMFroniusMeter.py"]

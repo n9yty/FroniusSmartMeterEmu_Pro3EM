@@ -1,12 +1,12 @@
 services:
   3em:
-    #image: 3emfroniusmeter:0.1
-    image: pro3emfroniusmeter:0.1
+    #image: n9yty/3emfroniusmeter:0.3
+    image: n9yty/pro3emfroniusmeter:0.3
     ports:
       - "502:502"
     environment:
-      SHELLY_3EM: "192.168.99.124"
-      SHELLY_PRO3EM: "192.168.99.113"
+      SHELLY_3EM: "192.168.99.252"
+      SHELLY_PRO3EM: "192.168.99.252"
     restart: unless-stopped
       #    sysctl:
       #net.ipv4.ip_unprivileged_port_start: 0
